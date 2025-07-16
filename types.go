@@ -9,7 +9,7 @@ type GraphQLError struct {
 	Message string `json:"message"`
 }
 
-type GraphQLResponse struct {
-	Data   any            `json:"data"`
+type GraphQLResponse[T any] struct {
+	Data   T              `json:"data"`
 	Errors []GraphQLError `json:"errors"`
 }

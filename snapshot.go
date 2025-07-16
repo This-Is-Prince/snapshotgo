@@ -71,7 +71,7 @@ func Query[T any](snapshothub *SnapshotHub, args Args, data *T) error {
 		return err
 	}
 
-	var graphqlResponse GraphQLResponse
+	var graphqlResponse GraphQLResponse[T]
 	err = json.Unmarshal(_data, &graphqlResponse)
 	if err != nil {
 		return err
@@ -80,6 +80,8 @@ func Query[T any](snapshothub *SnapshotHub, args Args, data *T) error {
 	if len(graphqlResponse.Errors) > 0 {
 		return errors.New("graphql error: " + graphqlResponse.Errors[0].Message)
 	}
+
+	*data = graphqlResponse.Data
 
 	return nil
 }
